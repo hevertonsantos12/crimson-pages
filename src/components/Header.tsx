@@ -25,7 +25,7 @@ const Header = () => {
         <nav className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center glow-scarlet">
+            <div className="w-10 h-10 rounded-lg bg-black flex items-center justify-center glow-scarlet">
               <span className="font-display text-xl text-primary-foreground">M</span>
             </div>
             <span className="font-display text-2xl tracking-wider text-foreground hidden sm:block">
