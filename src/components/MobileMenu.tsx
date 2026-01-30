@@ -13,7 +13,14 @@ const menuItems = [
 const navItems = [
   { icon: Home, label: "Home", href: "/" },
   { icon: Grid, label: "Gêneros", href: "#" },
-  { icon: Users, label: "Comunidade", href: "#" },
+];
+
+const communityItems = [
+  { label: "Autores", href: "#" },
+  { label: "Designers", href: "#" },
+  { label: "Artes", href: "#" },
+  { label: "Notícias", href: "#" },
+  { label: "Databook", href: "#" },
 ];
 
 const MobileMenu = () => {
@@ -46,6 +53,25 @@ const MobileMenu = () => {
               <span>{item.label}</span>
             </a>
           ))}
+        </div>
+        
+        {/* Comunidade submenu */}
+        <div className="mt-4">
+          <p className="text-xs text-muted-foreground mb-3 uppercase tracking-wider flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            Comunidade
+          </p>
+          <div className="space-y-1 pl-2">
+            {communityItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-secondary transition-colors text-sm"
+              >
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 

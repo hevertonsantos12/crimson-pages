@@ -16,6 +16,10 @@ const genres = [
   "Horror", "Romance", "Sci-Fi", "Slice of Life", "Shounen"
 ];
 
+const communityItems = [
+  "Autores", "Designers", "Artes", "Notícias", "Databook"
+];
+
 const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -50,7 +54,18 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            <a href="#" className="nav-link">Comunidade</a>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="nav-link flex items-center gap-1">
+                Comunidade <ChevronDown className="w-4 h-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-card border-border min-w-[160px] p-2">
+                {communityItems.map((item) => (
+                  <DropdownMenuItem key={item} className="cursor-pointer hover:bg-secondary">
+                    {item}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Search & Actions */}
