@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BookOpen, Shield, FileText, Mail, Info, User, Home, Grid, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -16,11 +17,11 @@ const navItems = [
 ];
 
 const communityItems = [
-  { label: "Autores", href: "#" },
-  { label: "Designers", href: "#" },
-  { label: "Artes", href: "#" },
-  { label: "Notícias", href: "#" },
-  { label: "Databook", href: "#" },
+  { label: "Autores", href: "/comunidade?tab=autores" },
+  { label: "Designers", href: "/comunidade?tab=designers" },
+  { label: "Artes", href: "/comunidade?tab=artes" },
+  { label: "Notícias", href: "/comunidade?tab=noticias" },
+  { label: "Databook", href: "/comunidade?tab=databook" },
 ];
 
 const MobileMenu = () => {
@@ -63,13 +64,13 @@ const MobileMenu = () => {
           </p>
           <div className="space-y-1 pl-2">
             {communityItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.href}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-secondary transition-colors text-sm"
               >
                 <span>{item.label}</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

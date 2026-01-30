@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, Search, X, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,11 @@ const genres = [
 ];
 
 const communityItems = [
-  "Autores", "Designers", "Artes", "Notícias", "Databook"
+  { label: "Autores", href: "/comunidade?tab=autores" },
+  { label: "Designers", href: "/comunidade?tab=designers" },
+  { label: "Artes", href: "/comunidade?tab=artes" },
+  { label: "Notícias", href: "/comunidade?tab=noticias" },
+  { label: "Databook", href: "/comunidade?tab=databook" },
 ];
 
 const Header = () => {
@@ -60,8 +65,8 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-card border-border min-w-[160px] p-2">
                 {communityItems.map((item) => (
-                  <DropdownMenuItem key={item} className="cursor-pointer hover:bg-secondary">
-                    {item}
+                  <DropdownMenuItem key={item.label} asChild className="cursor-pointer hover:bg-secondary">
+                    <Link to={item.href}>{item.label}</Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
