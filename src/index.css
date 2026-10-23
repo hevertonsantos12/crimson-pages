@@ -2,28 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
 
 @layer base {
   :root {
     /* Scarlet/Burgundy Theme */
-    --background: 0 10% 5%;
+    --background: 345 14% 5%;
     --foreground: 0 0% 95%;
 
-    --card: 0 15% 8%;
+    --card: 345 12% 8%;
     --card-foreground: 0 0% 95%;
 
-    --popover: 0 15% 8%;
+    --popover: 345 12% 8%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 0 70% 30%;
+    --primary: 350 73% 47%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 40% 15%;
+    --secondary: 345 12% 12%;
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 0 20% 12%;
-    --muted-foreground: 0 10% 60%;
+    --muted: 345 12% 11%;
+    --muted-foreground: 345 6% 61%;
 
     --accent: 40 80% 55%;
     --accent-foreground: 0 10% 5%;
@@ -31,11 +31,11 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 20% 18%;
-    --input: 0 20% 15%;
-    --ring: 0 70% 40%;
+    --border: 345 10% 17%;
+    --input: 345 10% 15%;
+    --ring: 350 73% 47%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     /* Custom tokens */
     --scarlet: 0 70% 30%;
@@ -45,6 +45,9 @@
     --burgundy-deep: 0 30% 6%;
     --gold: 40 80% 55%;
     --gold-muted: 40 50% 40%;
+
+    --hero-overlay: linear-gradient(90deg, hsl(var(--background) / .94) 0%, hsl(var(--background) / .64) 32%, hsl(var(--background) / .06) 68%), linear-gradient(0deg, hsl(var(--background)) 0%, transparent 28%);
+    --community-band: linear-gradient(110deg, hsl(345 30% 12%), hsl(var(--background)) 75%);
 
     /* Gradients */
     --gradient-scarlet: linear-gradient(135deg, hsl(0 70% 30%), hsl(0 80% 20%));
@@ -67,25 +70,25 @@
   }
 
   .dark {
-    --background: 0 10% 5%;
+    --background: 345 14% 5%;
     --foreground: 0 0% 95%;
-    --card: 0 15% 8%;
+    --card: 345 12% 8%;
     --card-foreground: 0 0% 95%;
-    --popover: 0 15% 8%;
+    --popover: 345 12% 8%;
     --popover-foreground: 0 0% 95%;
-    --primary: 0 70% 30%;
+    --primary: 350 73% 47%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 40% 15%;
+    --secondary: 345 12% 12%;
     --secondary-foreground: 0 0% 95%;
-    --muted: 0 20% 12%;
-    --muted-foreground: 0 10% 60%;
+    --muted: 345 12% 11%;
+    --muted-foreground: 345 6% 61%;
     --accent: 40 80% 55%;
     --accent-foreground: 0 10% 5%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 20% 18%;
-    --input: 0 20% 15%;
-    --ring: 0 70% 40%;
+    --border: 345 10% 17%;
+    --input: 345 10% 15%;
+    --ring: 350 73% 47%;
   }
 }
 
@@ -96,12 +99,12 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
   }
 
   h1, h2, h3, .font-display {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.05em;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0;
   }
 }
 
@@ -115,17 +118,15 @@
   }
 
   .manga-card {
-    @apply relative overflow-hidden rounded-lg bg-card transition-all duration-300;
-    box-shadow: var(--shadow-card);
+    @apply relative overflow-hidden rounded-none bg-transparent transition-all duration-300;
   }
 
   .manga-card:hover {
-    @apply scale-105;
-    box-shadow: var(--shadow-glow);
+    @apply text-foreground;
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-display tracking-wider text-foreground;
+    @apply text-3xl md:text-4xl font-display font-semibold text-foreground;
   }
 
   .gradient-text {
@@ -159,4 +160,23 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+}
+
+@layer components {
+  .eyebrow { font-size: 9px; font-weight: 700; color: hsl(var(--muted-foreground)); letter-spacing: 0; }
+  .hero-stage { height: 510px; max-height: 65vh; min-height: 450px; }
+  .hero-art { object-position: center 40%; }
+  .hero-shade { background: var(--hero-overlay); }
+  .hero-copy { padding-bottom: 25px; }
+  .community-band { background: var(--community-band); }
+  .nav-link:hover { background: transparent; color: hsl(var(--foreground)); }
+}
+@media (max-width: 640px) {
+ .hero-stage { height: 540px; min-height: 500px; max-height: none; }
+ .hero-art { object-position: 66% center; }
+ .hero-copy { padding-top: 40px; max-width: 90%; }
+ .hero-shade { background: linear-gradient(90deg, hsl(var(--background) / .87), hsl(var(--background) / .35)), linear-gradient(0deg, hsl(var(--background)), transparent 50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+ *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

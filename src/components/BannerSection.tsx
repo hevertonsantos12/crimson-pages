@@ -1,42 +1,5 @@
-import { Sparkles, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const BannerSection = () => {
-  return (
-    <section className="py-12">
-      <div className="container mx-auto px-4">
-        <div 
-          className="relative rounded-2xl overflow-hidden p-8 md:p-12"
-          style={{ background: "var(--gradient-scarlet)" }}
-        >
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary-foreground/5 rounded-full blur-2xl" />
-          
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center animate-pulse-glow">
-                <Sparkles className="w-8 h-8 text-accent" />
-              </div>
-              <div>
-                <h3 className="font-display text-2xl md:text-3xl tracking-wider text-primary-foreground">
-                  Torne-se Premium
-                </h3>
-                <p className="text-primary-foreground/80 mt-1">
-                  Leitura ilimitada, sem anúncios e capítulos exclusivos
-                </p>
-              </div>
-            </div>
-            
-            <Button className="btn-gold gap-2 px-8 py-6 text-lg shrink-0">
-              Assinar Agora
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
+import { ArrowUpRight, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+const BannerSection=()=> <section className="community-band border-b border-border py-12 md:py-16"><div className="container flex flex-col items-start justify-between gap-6 px-5 md:flex-row md:items-center md:px-8"><div><p className="eyebrow mb-3 flex items-center gap-2"><Users className="h-4 w-4" /> COMUNIDADE MKY</p><h2 className="section-title mb-3">Boas histórias conectam pessoas.</h2><p className="max-w-lg text-sm leading-relaxed text-muted-foreground">Por trás de cada traço, um universo. Encontre os artistas e as ideias que dão vida às suas histórias favoritas.</p></div><Button asChild className="gap-3" size="lg"><Link to="/comunidade">Explorar comunidade<ArrowUpRight className="h-4 w-4" /></Link></Button></div></section>;
 export default BannerSection;

@@ -77,8 +77,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Bebas Neue', 'sans-serif'],
+        sans: ['Manrope', 'sans-serif'],
+        display: ['Barlow Condensed', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
