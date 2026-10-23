@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { Facebook, Instagram, Youtube, Twitter, BookOpen } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const socialLinks = [
@@ -28,13 +28,13 @@ const TikTokIcon = () => (
 const Footer = () => {
   return (
     <footer className="bg-burgundy-deep border-t border-border">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-9">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
-              <span className="font-display text-2xl text-primary-foreground">M</span>
+              <span className="text-primary-foreground"><BookOpen className="h-5 w-5" /></span>
             </div>
             <span className="font-display text-2xl tracking-wider">MKY Studio</span>
           </div>
@@ -46,7 +46,7 @@ const Footer = () => {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/20 transition-colors"
+                className="w-10 h-10 rounded-md bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/20 transition-colors"
               >
                 <social.icon className="w-5 h-5" />
               </a>
@@ -54,7 +54,7 @@ const Footer = () => {
             <a
               href="#"
               aria-label="TikTok"
-              className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/20 transition-colors"
+              className="w-10 h-10 rounded-md bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/20 transition-colors"
             >
               <TikTokIcon />
             </a>

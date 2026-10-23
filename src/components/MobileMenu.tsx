@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { BookOpen, Shield, FileText, Mail, Info, User, Home, Grid, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SheetClose } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 
 const menuItems = [
-  { icon: BookOpen, label: "Mangá List", href: "#" },
+  { icon: BookOpen, label: "Catálogo de mangás", href: "/?catalog=all#catalogo" },
   { icon: Shield, label: "Políticas de Privacidade", href: "#" },
   { icon: FileText, label: "Termos de Uso", href: "#" },
   { icon: Mail, label: "Contatos", href: "#" },
@@ -13,7 +14,7 @@ const menuItems = [
 
 const navItems = [
   { icon: Home, label: "Home", href: "/" },
-  { icon: Grid, label: "Gêneros", href: "#" },
+  { icon: Grid, label: "Gêneros", href: "/#catalogo" },
 ];
 
 const communityItems = [
@@ -64,13 +65,12 @@ const MobileMenu = () => {
           </p>
           <div className="space-y-1 pl-2">
             {communityItems.map((item) => (
-              <Link
-                key={item.label}
+              <SheetClose asChild key={item.label}><Link
                 to={item.href}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-secondary transition-colors text-sm"
               >
                 <span>{item.label}</span>
-              </Link>
+              </Link></SheetClose>
             ))}
           </div>
         </div>

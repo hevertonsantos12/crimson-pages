@@ -1,146 +1,18 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, Search, X, User, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import MobileMenu from "./MobileMenu";
-
-const genres = [
-  "Ação", "Aventura", "Comédia", "Drama", "Fantasia", 
-  "Horror", "Romance", "Sci-Fi", "Slice of Life", "Shounen"
-];
-
-const communityItems = [
-  { label: "Autores", href: "/comunidade?tab=autores" },
-  { label: "Designers", href: "/comunidade?tab=designers" },
-  { label: "Artes", href: "/comunidade?tab=artes" },
-  { label: "Notícias", href: "/comunidade?tab=noticias" },
-  { label: "Databook", href: "/comunidade?tab=databook" },
-];
-
-const Header = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
-
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-border">
-      <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center glow-scarlet">
-              <span className="font-display text-xl text-primary-foreground">M</span>
-            </div>
-            <span className="font-display text-2xl tracking-wider text-foreground hidden sm:block">
-              MKY Studio
-            </span>
-          </a>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            <a href="/" className="nav-link">Home</a>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger className="nav-link flex items-center gap-1">
-                Gêneros <ChevronDown className="w-4 h-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-card border-border min-w-[200px] grid grid-cols-2 gap-1 p-2">
-                {genres.map((genre) => (
-                  <DropdownMenuItem key={genre} className="cursor-pointer hover:bg-secondary">
-                    {genre}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger className="nav-link flex items-center gap-1">
-                Comunidade <ChevronDown className="w-4 h-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-card border-border min-w-[160px] p-2">
-                {communityItems.map((item) => (
-                  <DropdownMenuItem key={item.label} asChild className="cursor-pointer hover:bg-secondary">
-                    <Link to={item.href}>{item.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          {/* Search & Actions */}
-          <div className="flex items-center gap-3">
-            {/* Search */}
-            <div className="hidden md:flex items-center">
-              {searchOpen ? (
-                <div className="flex items-center gap-2 animate-fade-in">
-                  <Input 
-                    placeholder="Buscar mangá..." 
-                    className="w-64 bg-input border-border focus:ring-primary"
-                  />
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    onClick={() => setSearchOpen(false)}
-                  >
-                    <X className="w-5 h-5" />
-                  </Button>
-                </div>
-              ) : (
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  onClick={() => setSearchOpen(true)}
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
-              )}
-            </div>
-
-            {/* Mobile Search */}
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Search className="w-5 h-5" />
-            </Button>
-
-            {/* Login Button */}
-            <Button className="btn-primary hidden sm:flex items-center gap-2">
-              <User className="w-4 h-4" />
-              Login
-            </Button>
-
-            {/* Mobile Menu */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden">
-                  <Menu className="w-6 h-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="bg-card border-border p-0 w-80">
-                <MobileMenu />
-              </SheetContent>
-            </Sheet>
-
-            {/* Desktop Hamburger for extra menu */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden lg:flex">
-                  <Menu className="w-5 h-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="bg-card border-border p-0 w-80">
-                <MobileMenu />
-              </SheetContent>
-            </Sheet>
-          </div>
-        </nav>
-      </div>
-    </header>
-  );
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, Search, User, ChevronDown, BookOpen, ArrowUpRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { genres } from '@/lib/catalog';
+import MobileMenu from './MobileMenu';
+const communityItems=[{label:'Autores',tab:'autores'},{label:'Designers',tab:'designers'},{label:'Artes',tab:'artes'},{label:'Notícias',tab:'noticias'},{label:'Databook',tab:'databook'}];
+const Header=()=>{
+ const [query,setQuery]=useState(''); const [mobileSearch,setMobileSearch]=useState(false);const navigate=useNavigate();const location=useLocation();
+ function search(e:React.FormEvent){e.preventDefault();navigate(`/?q=${encodeURIComponent(query)}#catalogo`);setMobileSearch(false);setTimeout(()=>document.getElementById('catalogo')?.scrollIntoView({behavior:'smooth'}),50);}
+ const searchForm=<form onSubmit={search} className="relative w-full"><Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" /><Input aria-label="Buscar mangá" placeholder="Buscar mangá..." value={query} onChange={e=>setQuery(e.target.value)} className="h-9 rounded-md border-border bg-muted/60 pl-9 pr-9 text-xs" /><Button type="submit" size="icon" variant="ghost" aria-label="Pesquisar" className="absolute right-0 top-0 h-9 w-8 hover:bg-transparent"><ArrowUpRight className="h-3 w-3 text-muted-foreground" /></Button></form>;
+ return <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 backdrop-blur-xl"><div className="container px-5 md:px-8"><nav className="flex h-[72px] items-center justify-between gap-5"><Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="MKY Studio — início"><span className="brand-mark flex h-9 w-9 items-center justify-center rounded bg-primary text-primary-foreground"><BookOpen className="h-5 w-5" /></span><span className="font-display text-xl font-bold">MKY<span className="ml-1.5 font-sans text-sm font-medium text-muted-foreground">STUDIO</span></span></Link><div className="hidden items-center gap-6 lg:flex"><Button asChild variant="ghost" className={`nav-link h-[72px] rounded-none border-b-2 px-0 text-xs ${location.pathname==='/'?'border-primary text-foreground':'border-transparent'}`}><Link to="/">Início</Link></Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" className="nav-link gap-1 px-0 text-xs">Gêneros<ChevronDown className="h-3 w-3" /></Button></DropdownMenuTrigger><DropdownMenuContent className="grid grid-cols-2 gap-1 p-2">{genres.slice(1).map(g=><DropdownMenuItem key={g} asChild><Link to={`/?genre=${encodeURIComponent(g)}#catalogo`}>{g}</Link></DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu><DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" className={`nav-link gap-1 px-0 text-xs ${location.pathname==='/comunidade'?'text-primary':''}`}>Comunidade<ChevronDown className="h-3 w-3" /></Button></DropdownMenuTrigger><DropdownMenuContent className="min-w-[180px] p-2">{communityItems.map(i=><DropdownMenuItem key={i.tab} asChild><Link to={`/comunidade?tab=${i.tab}`}>{i.label}</Link></DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div><div className="flex items-center gap-3"><div className="hidden w-48 md:block xl:w-56">{searchForm}</div><Button variant="ghost" size="icon" aria-label="Abrir busca" className="md:hidden" onClick={()=>setMobileSearch(!mobileSearch)}><Search className="h-5 w-5" /></Button><span className="hidden h-5 border-l border-border sm:block" /><Dialog><DialogTrigger asChild><Button variant="ghost" className="hidden gap-2 px-1 text-xs sm:flex"><User className="h-4 w-4" />Entrar</Button></DialogTrigger><DialogContent><DialogHeader><DialogTitle>Sua conta MKY</DialogTitle><DialogDescription>O acesso às contas ainda não está disponível. Você pode explorar o catálogo e a Comunidade sem entrar.</DialogDescription></DialogHeader><Button asChild><Link to="/comunidade">Explorar comunidade</Link></Button></DialogContent></Dialog><Sheet><SheetTrigger asChild><Button variant="ghost" size="icon" aria-label="Abrir menu" className="h-9 w-9"><Menu className="h-5 w-5" /></Button></SheetTrigger><SheetContent className="w-80 border-border bg-card p-0"><SheetTitle className="sr-only">Menu MKY Studio</SheetTitle><MobileMenu /></SheetContent></Sheet></div></nav>{mobileSearch&&<div className="pb-4 md:hidden">{searchForm}</div>}</div></header>;
 };
-
 export default Header;

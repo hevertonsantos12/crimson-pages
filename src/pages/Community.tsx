@@ -1,4 +1,6 @@
 import { useSearchParams } from "react-router-dom";
+import { resolveCommunityTab } from "@/lib/catalog";
+import artwork from "@/assets/featured-manga.jpg";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -49,59 +51,59 @@ const databooks = [
 ];
 
 const Community = () => {
-  const [searchParams] = useSearchParams();
-  const defaultTab = searchParams.get("tab") || "autores";
+  const [searchParams, setSearchParams] = useSearchParams();
+  const defaultTab = resolveCommunityTab(searchParams.get("tab"));
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="pt-24 pb-16">
+      <main className="pt-32 pb-16">
         <div className="container mx-auto px-4">
           {/* Hero Section */}
-          <div className="text-center mb-12">
-            <h1 className="font-display text-4xl md:text-5xl mb-4 text-gradient">
+          <div className="mb-10 border-b border-border pb-8">
+            <h1 className="font-display text-4xl md:text-5xl mb-4 text-foreground">
               Comunidade MKY
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Conecte-se com autores, designers e fãs de mangá. Explore artes, notícias e muito mais.
+            <p className="text-muted-foreground text-sm max-w-2xl">
+              Histórias, traços e quem faz tudo acontecer.
             </p>
           </div>
 
           {/* Tabs Section */}
-          <Tabs defaultValue={defaultTab} className="w-full">
-            <TabsList className="w-full flex flex-wrap justify-center gap-2 bg-transparent h-auto p-2 mb-8">
+          <Tabs value={defaultTab} onValueChange={(tab) => { const next = new URLSearchParams(searchParams); next.set("tab", tab); setSearchParams(next, { preventScrollReset: true }); }} className="w-full">
+            <TabsList className="w-full flex justify-start gap-2 bg-transparent h-auto p-0 pb-3 mb-8 overflow-x-auto">
               <TabsTrigger 
                 value="autores" 
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg flex items-center gap-2"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-3 rounded-md flex shrink-0 items-center gap-2"
               >
                 <Users className="w-4 h-4" />
                 Autores
               </TabsTrigger>
               <TabsTrigger 
                 value="designers"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg flex items-center gap-2"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-3 rounded-md flex shrink-0 items-center gap-2"
               >
                 <Palette className="w-4 h-4" />
                 Designers
               </TabsTrigger>
               <TabsTrigger 
                 value="artes"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg flex items-center gap-2"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-3 rounded-md flex shrink-0 items-center gap-2"
               >
                 <Image className="w-4 h-4" />
                 Artes
               </TabsTrigger>
               <TabsTrigger 
                 value="noticias"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg flex items-center gap-2"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-3 rounded-md flex shrink-0 items-center gap-2"
               >
                 <Newspaper className="w-4 h-4" />
                 Notícias
               </TabsTrigger>
               <TabsTrigger 
                 value="databook"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6 py-3 rounded-lg flex items-center gap-2"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-3 rounded-md flex shrink-0 items-center gap-2"
               >
                 <BookOpen className="w-4 h-4" />
                 Databook
@@ -118,7 +120,7 @@ const Community = () => {
                         {author.avatar}
                       </div>
                       <div>
-                        <CardTitle className="text-lg">{author.name}</CardTitle>
+                        <CardTitle className="text-xl">{author.name}</CardTitle>
                         <CardDescription>{author.works}</CardDescription>
                       </div>
                     </CardHeader>
@@ -143,7 +145,7 @@ const Community = () => {
                         {designer.avatar}
                       </div>
                       <div>
-                        <CardTitle className="text-lg">{designer.name}</CardTitle>
+                        <CardTitle className="text-xl">{designer.name}</CardTitle>
                         <CardDescription>{designer.specialty}</CardDescription>
                       </div>
                     </CardHeader>
@@ -163,9 +165,7 @@ const Community = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {artworks.map((art) => (
                   <Card key={art.id} className="bg-card border-border overflow-hidden group hover:border-primary/50 transition-all duration-300">
-                    <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/30 flex items-center justify-center">
-                      <Image className="w-16 h-16 text-primary/50 group-hover:scale-110 transition-transform" />
-                    </div>
+                    <div className="aspect-[4/3] overflow-hidden bg-muted"><img src={artwork} alt={art.title} loading="lazy" width={1920} height={1024} className="h-full w-full object-cover transition-transform group-hover:scale-105" /></div>
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="font-semibold">{art.title}</h3>
@@ -186,9 +186,9 @@ const Community = () => {
               <div className="space-y-4">
                 {news.map((item) => (
                   <Card key={item.id} className="bg-card border-border hover:border-primary/50 transition-all duration-300">
-                    <CardContent className="p-6 flex items-center justify-between">
+                    <CardContent className="p-4 sm:p-6 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
+                        <div className="hidden sm:flex shrink-0 w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
                           <Newspaper className="w-6 h-6 text-primary" />
                         </div>
                         <div>
@@ -215,7 +215,7 @@ const Community = () => {
                   <Card key={book.id} className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
                     <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">{book.title}</CardTitle>
+                        <CardTitle className="text-xl">{book.title}</CardTitle>
                         <BookOpen className="w-6 h-6 text-primary" />
                       </div>
                     </CardHeader>
